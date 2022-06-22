@@ -1,0 +1,25 @@
+.functions{
+    /* width: 400px; */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 40px;
+  
+  }
+  .functionBtn{
+    padding: 8px;
+    margin: 0px 10px;
+    border-radius: 50%;
+    
+  
+  }
+  .functionImg{
+    margin: none;
+    display: inline;
+    height: 36px;
+    width: 36px;
+    border: none;
+  
+  }

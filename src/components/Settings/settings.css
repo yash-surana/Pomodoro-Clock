@@ -1,0 +1,12 @@
+h4{
+    margin: 8px;
+    margin-top: 0;
+}
+.timeSet{
+    margin: 0;
+}
+.activity{
+    display: flex;
+    justify-content: center;
+    
+}
