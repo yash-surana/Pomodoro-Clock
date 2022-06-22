@@ -84,7 +84,7 @@ function App() {
          </div>
 
         <div>
-          <h5>Pomodoro cycles completed: {cycle}</h5>
+          <h5 className="cycles">Pomodoro cycles completed: {cycle}</h5>
         </div>
         {/* Settings */}
         <div className="row">
