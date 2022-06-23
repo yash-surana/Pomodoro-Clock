@@ -1,5 +1,5 @@
 body{
-  margin: 0; height: 100%; overflow: hidden
+  margin: 0; height: 100%; overflow: hidden;
 }
 h2{
   text-align: center;
@@ -11,10 +11,34 @@ h2{
   text-align: center;
   padding: 48px;
   padding-top: 40px;
+  
 }
 .time{
   font-size: 128px;
+  
 }
+@media(max-width: 649px) {
+  body{
+    overflow: visible;
+  }
+  .container{
+    box-sizing: border-box;
+  }
+  .time{
+    font-size:64px;
+  }
+  .settings{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .settingsHeader{
+    text-align: center;
+    
+  }
+  }
+
 #heading{
 margin: 0;
 
@@ -49,7 +73,7 @@ h4{
 
 }
 .functionImg{
-  margin: none;
+  margin: 0;
   display: inline;
   height: 36px;
   width: 36px;
@@ -59,4 +83,10 @@ h4{
 .cycles{
   margin: 0;
   margin-bottom: 8px;
+}
+.session{
+  margin: 0;
+}
+.break{
+  margin: 0;
 }

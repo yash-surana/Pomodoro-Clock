@@ -4,23 +4,44 @@ import './App.css';
 import { useState,useEffect } from 'react';
 
 function App() {
+
+  
+  const [breakTime, setBreakTime] = useState(5);
+  const [workTime, setWorkTime] = useState(25);
   const [isRunning,setIsRunning] = useState(false);
   const [currentActivity, setCurrentActivity] = useState("Work Session");
-  const [seconds,setSeconds]=useState(5);
-  const [minutes,setMinutes]=useState(0);
+  const [seconds,setSeconds]=useState(0);
+  const [minutes,setMinutes]=useState(workTime);
   const [numOfActivity, setNumOfActivity] = useState(1);
   const [cycle, setCycle]=useState(0);
+  const [resetClicked, setResetClicked] = useState(false);
 
+
+
+  // Converting minutes and seconds to add 0 at start when they are single digits
   const doubleDigitMins = minutes >= 10 ? minutes : `0${minutes}`;
   const doubleDigitSeconds = seconds >= 10 ? seconds : `0${seconds}`;
 
-  // Updating number of sessions to increase break time to 15 minutes 
   
-
+  
+  
   useEffect(() => {
+    // debugger;
     let interval = setInterval(() => {
       clearInterval(interval);
+      if(resetClicked){
+        setBreakTime(5);
+        setWorkTime(25);
+        setSeconds(0);
+        setMinutes(25);
+        setCurrentActivity(currentActivity)
+        setIsRunning(false)
+        setNumOfActivity(1);
+        setCycle(0);
+        return;
+      }
       if(isRunning){
+        
         if (seconds === 0) {
           if (minutes !== 0) {
             setSeconds(59);
@@ -31,19 +52,19 @@ function App() {
             
             console.log(numOfActivity,currentActivity )
             if (numOfActivity===8){
-              setMinutes(0);
+              setMinutes(15);
               setCurrentActivity("Long Break");
-              setSeconds(3);
+              setSeconds(0);
               setNumOfActivity(0);
               // setCycle(cycle-0.5);
             }
             else{
               setCycle(cycle+0.5);
               setNumOfActivity(numOfActivity+1);
-            let newActivity = (currentActivity === "Work Session" ? "Break Session" : "Work Session");
-            setCurrentActivity(newActivity);
-            currentActivity === "Work Session" ? (setMinutes(0)) : (setMinutes(0));
-            setSeconds(3);
+              let newActivity = (currentActivity === "Work Session" ? "Break Session" : "Work Session");
+              setCurrentActivity(newActivity);
+              newActivity === "Work Session" ? ((setMinutes(workTime))) : ((setMinutes(breakTime)));
+              setSeconds(0);
             }
           }
         } else {
@@ -54,14 +75,54 @@ function App() {
       }
        
     }, 1000);
-  }, [seconds,currentActivity,isRunning]);
+  }, [seconds,currentActivity,isRunning, resetClicked]);
 
   const handleClick = () => {
-      // Timer();
-      
       setIsRunning(!(isRunning));
-      
+      setResetClicked(false);
+    }
+
+  // Reset function to reset clock
+  const reset=()=> {
+    setResetClicked(true);
+    
   }
+  
+  const increment = (e) => {
+    
+    {switch (e.target.className){
+      case "session":
+        
+        setWorkTime(minutes+1)
+        setMinutes(minutes+1)
+        break;
+      case "break":
+        (setBreakTime(breakTime+1))
+        break;
+      default:
+        break;
+    }}
+    setSeconds(0);
+  }
+  
+  const decrement = (e) => {
+    if(workTime>1 & breakTime>1){
+      switch (e.target.className){
+        case "session":
+          setWorkTime(minutes-1)
+          setMinutes(minutes-1)
+          break;
+        case "break":
+          (setBreakTime(breakTime-1))
+          break;
+        default:
+          break;
+      }
+    }
+    
+    setSeconds(0);
+  }
+
   return (
     <div className='container'>
         <h2>Pomodoro Clock</h2>
@@ -73,11 +134,11 @@ function App() {
 
         {/* Controls */}
         <div className="row functions">
-           <button className="functionBtn btn-small" onClick={handleClick}>
-            {isRunning ? (<img src="./images/pause.png" alt="pause" className="functionImg"/>) : (<img src="./images/start.png" alt="start" className="functionImg"/>)}
+           <button className="functionBtn btn-small" onClick={handleClick} popover-bottom={isRunning? "Pause Timer": "Start Timer"}>
+            {isRunning ? (<img src="./images/pause.png" alt="pause" className="functionImg" />) : (<img src="./images/start.png" alt="start" className="functionImg"/>)}
             
           </button>
-          <button className=" btn-small functionBtn">
+          <button className=" btn-small functionBtn" onClick={reset} popover-bottom="Reset Timer">
             <img src="./images/reset.png" alt="reset" className="functionImg"/>
           </button>
 
@@ -87,25 +148,25 @@ function App() {
           <h5 className="cycles">Pomodoro cycles completed: {cycle}</h5>
         </div>
         {/* Settings */}
-        <div className="row">
-        <div className=" col-6 ">
-        
-        <h4>Session Time</h4>
-        <div className='row activity'>
-        <button>+</button>
-        <h5 className='col col-4 timeSet'>25 mins</h5>
-        <button>-</button>
-        </div>
-        </div>
-        <div className=" col-6 ">
-            
-            <h4>Break Time</h4>
-            <div className='row activity'>
-            <button>+</button>
-            <h5 className='col col-4 timeSet'>5 mins</h5>
-            <button>-</button>
+        <div className="row settings">
+          <div className=" col-6 ">
+          
+            <h4 className="settingsHeader">Session Time</h4>
+            <div className='row activity' >
+            <button disabled={isRunning} onClick={increment} className="session" popover-bottom="Increase Session Time">+</button>
+            <h5 className='col col-5 timeSet'>{workTime} mins</h5>
+            <button  className="session" disabled={(isRunning || (workTime===1))} onClick={decrement} popover-bottom="Decrease Session Time">-</button>
             </div>
-        </div>
+          </div>
+          <div className=" col-6 ">
+              
+              <h4 className="settingsHeader">Break Time</h4>
+              <div className='row activity'>
+              <button className="break" disabled={isRunning} onClick={increment} popover-bottom="Increase Break Time">+</button>
+              <h5 className='col col-4 timeSet'>{breakTime} mins</h5>
+              <button className="break" disabled={isRunning|| (breakTime===1)} onClick={decrement}popover-bottom="Decrease Break Time">-</button>
+              </div>
+          </div>
         </div>
     </div>
   );
