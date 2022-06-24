@@ -90,7 +90,7 @@ function App() {
   
   const increment = (e) => {
     
-    {switch (e.target.className){
+    switch(e.target.className){
       case "session":
         
         setWorkTime(minutes+1)
@@ -101,7 +101,7 @@ function App() {
         break;
       default:
         break;
-    }}
+    }
     setSeconds(0);
   }
   
