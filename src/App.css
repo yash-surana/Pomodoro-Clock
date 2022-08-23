@@ -25,7 +25,11 @@ h2{
     box-sizing: border-box;
   }
   .time{
-    font-size:64px;
+    font-size:60px;
+    position: relative;
+    left: -10px;   
+    
+
   }
   .settings{
     display: flex;
@@ -37,6 +41,18 @@ h2{
     text-align: center;
     
   }
+  .activity{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .timeSet{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+
   }
 
 #heading{
@@ -53,6 +69,7 @@ h4{
 .activity{
   display: flex;
   justify-content: center;
+  
   
 }
 .functions{

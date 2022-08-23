@@ -124,10 +124,10 @@ function App() {
   }
 
   return (
-    <div className='container'>
+    <div className='container first'>
         <h2>Pomodoro Clock</h2>
 
-        <div className="container container.md border shadow">
+        <div className="container container.md border shadow second">
           <h4 id="heading">{currentActivity}</h4>
           <div className="time">{doubleDigitMins}:{doubleDigitSeconds}</div>
         </div>
