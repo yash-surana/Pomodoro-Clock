@@ -153,7 +153,7 @@ function App() {
           
             <h4 className="settingsHeader">Session Time</h4>
             <div className='row activity' >
-            <button disabled={isRunning} onClick={increment} className="session" popover-bottom="Increase Session Time">+</button>
+            <button disabled={isRunning} onClick={increment} className="session"  popover-bottom="Increase Session Time">+</button>
             <h5 className='col col-5 timeSet'>{workTime} mins</h5>
             <button  className="session" disabled={(isRunning || (workTime===1))} onClick={decrement} popover-bottom="Decrease Session Time">-</button>
             </div>
